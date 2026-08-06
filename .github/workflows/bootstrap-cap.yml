@@ -1,0 +1,61 @@
+name: Bootstrap CAP Canon
+
+on:
+  push:
+    paths:
+      - .github/workflows/bootstrap-cap.yml
+
+permissions:
+  contents: write
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: ["3.10", "3.11", "3.12", "3.13"]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+      - name: Restore and verify CAP payload
+        shell: bash
+        run: |
+          cat bootstrap/payload.part* | base64 --decode > /tmp/cap.tar.xz
+          echo "904330a35ee2d02e90f1fe4b393f57e27fa3b02812e450c07d8003416a8949f6  /tmp/cap.tar.xz" | sha256sum --check
+          rm -rf /tmp/cap-tree
+          mkdir -p /tmp/cap-tree
+          tar -xJf /tmp/cap.tar.xz -C /tmp/cap-tree
+          cd /tmp/cap-tree/composite-assurance-protocol
+          python -m pip install --upgrade pip jsonschema
+          python -m unittest discover -v
+          python -m json.tool ARTIFACT.json >/dev/null
+          python -m json.tool schema/composite-assessment-record.schema.json >/dev/null
+          python validator/cap_validate.py examples/bounded-runtime-assessment.json
+          python -m review.test_artifact_canon
+
+  publish:
+    needs: test
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main'
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Publish validated CAP tree
+        shell: bash
+        run: |
+          cat bootstrap/payload.part* | base64 --decode > /tmp/cap.tar.xz
+          echo "904330a35ee2d02e90f1fe4b393f57e27fa3b02812e450c07d8003416a8949f6  /tmp/cap.tar.xz" | sha256sum --check
+          rm -rf /tmp/cap-tree
+          mkdir -p /tmp/cap-tree
+          tar -xJf /tmp/cap.tar.xz -C /tmp/cap-tree
+          rsync -a --exclude='.github/workflows/ci.yml' /tmp/cap-tree/composite-assurance-protocol/ "$GITHUB_WORKSPACE/"
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A
+          git diff --cached --check
+          git commit -m "Canonize Composite Assurance Protocol"
+          git push origin HEAD:main
