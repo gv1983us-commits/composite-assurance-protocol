@@ -1,0 +1,479 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/gv1983us-commits/composite-assurance-protocol/main/schema/composite-assessment-record.schema.json",
+  "title": "CAP Composite Assessment Record 0.1-draft",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "record_profile_version",
+    "record_id",
+    "created_at",
+    "producer",
+    "subject",
+    "assessment_question",
+    "assessment_scope",
+    "source_records",
+    "required_domains",
+    "domain_results",
+    "conflicts",
+    "unknowns",
+    "composition_policy",
+    "result",
+    "claims_not_made"
+  ],
+  "properties": {
+    "record_profile_version": {
+      "const": "0.1-draft"
+    },
+    "record_id": {
+      "type": "string",
+      "pattern": "^cap:[A-Za-z0-9._:-]{1,120}$"
+    },
+    "created_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "producer": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "name",
+        "role"
+      ],
+      "properties": {
+        "name": {
+          "type": "string",
+          "minLength": 1
+        },
+        "role": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "subject": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "subject_id",
+        "description"
+      ],
+      "properties": {
+        "subject_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "description": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "assessment_question": {
+      "type": "string",
+      "minLength": 1
+    },
+    "assessment_scope": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "task",
+        "environment",
+        "time_window",
+        "limitations"
+      ],
+      "properties": {
+        "task": {
+          "type": "string",
+          "minLength": 1
+        },
+        "environment": {
+          "type": "string",
+          "minLength": 1
+        },
+        "time_window": {
+          "type": "string",
+          "minLength": 1
+        },
+        "limitations": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "uniqueItems": true
+        }
+      }
+    },
+    "source_records": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "$ref": "#/$defs/sourceRecord"
+      }
+    },
+    "required_domains": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "string",
+        "pattern": "^[a-z][a-z0-9_]{2,80}$"
+      },
+      "uniqueItems": true
+    },
+    "domain_results": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "$ref": "#/$defs/domainResult"
+      }
+    },
+    "conflicts": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/conflict"
+      }
+    },
+    "unknowns": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/unknown"
+      }
+    },
+    "composition_policy": {
+      "$ref": "#/$defs/policy"
+    },
+    "result": {
+      "$ref": "#/$defs/result"
+    },
+    "claims_not_made": {
+      "type": "array",
+      "minItems": 6,
+      "items": {
+        "type": "string",
+        "minLength": 3
+      },
+      "uniqueItems": true
+    },
+    "tool_failure": {
+      "$ref": "#/$defs/toolFailure"
+    }
+  },
+  "$defs": {
+    "sourceRecord": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "source_id",
+        "artifact_id",
+        "repository",
+        "reviewed_revision",
+        "record_uri",
+        "claim_domain",
+        "native_status",
+        "native_status_owner",
+        "native_status_meaning_uri",
+        "validation_receipt",
+        "carried_only",
+        "native_record_validity_established_by_cap"
+      ],
+      "properties": {
+        "source_id": {
+          "type": "string",
+          "pattern": "^src:[A-Za-z0-9._:-]{1,80}$"
+        },
+        "artifact_id": {
+          "type": "string",
+          "pattern": "^claude\\.[a-z_]+$"
+        },
+        "repository": {
+          "type": "string",
+          "pattern": "^gv1983us-commits/[A-Za-z0-9._-]+$"
+        },
+        "reviewed_revision": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{40}$"
+        },
+        "record_uri": {
+          "type": "string",
+          "minLength": 1
+        },
+        "claim_domain": {
+          "type": "string",
+          "minLength": 1
+        },
+        "native_status": {
+          "type": "string",
+          "minLength": 1
+        },
+        "native_status_owner": {
+          "type": "string",
+          "pattern": "^claude\\.[a-z_]+$"
+        },
+        "native_status_meaning_uri": {
+          "type": "string",
+          "minLength": 1
+        },
+        "validation_receipt": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "status",
+            "validator",
+            "evidence_ref"
+          ],
+          "properties": {
+            "status": {
+              "enum": [
+                "VALIDATED",
+                "NOT_VALIDATED",
+                "UNAVAILABLE"
+              ]
+            },
+            "validator": {
+              "type": "string",
+              "minLength": 1
+            },
+            "evidence_ref": {
+              "type": "string",
+              "minLength": 1
+            }
+          }
+        },
+        "carried_only": {
+          "const": true
+        },
+        "native_record_validity_established_by_cap": {
+          "const": false
+        }
+      }
+    },
+    "domainResult": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "domain",
+        "disposition",
+        "basis_source_ids",
+        "mapping_rule",
+        "rationale",
+        "native_verdicts_preserved"
+      ],
+      "properties": {
+        "domain": {
+          "type": "string",
+          "pattern": "^[a-z][a-z0-9_]{2,80}$"
+        },
+        "disposition": {
+          "enum": [
+            "SATISFIED",
+            "UNSATISFIED",
+            "UNKNOWN",
+            "CONFLICTING"
+          ]
+        },
+        "basis_source_ids": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^src:"
+          },
+          "uniqueItems": true
+        },
+        "mapping_rule": {
+          "type": "string",
+          "minLength": 1
+        },
+        "rationale": {
+          "type": "string",
+          "minLength": 1
+        },
+        "native_verdicts_preserved": {
+          "const": true
+        }
+      }
+    },
+    "conflict": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "conflict_id",
+        "domains",
+        "source_ids",
+        "blocking",
+        "description",
+        "resolution_status",
+        "resolution_evidence"
+      ],
+      "properties": {
+        "conflict_id": {
+          "type": "string",
+          "pattern": "^conflict:[A-Za-z0-9._:-]{1,80}$"
+        },
+        "domains": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "string"
+          },
+          "uniqueItems": true
+        },
+        "source_ids": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "string",
+            "pattern": "^src:"
+          },
+          "uniqueItems": true
+        },
+        "blocking": {
+          "type": "boolean"
+        },
+        "description": {
+          "type": "string",
+          "minLength": 1
+        },
+        "resolution_status": {
+          "enum": [
+            "UNRESOLVED",
+            "RESOLVED"
+          ]
+        },
+        "resolution_evidence": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "uniqueItems": true
+        }
+      }
+    },
+    "unknown": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "unknown_id",
+        "domain",
+        "source_ids",
+        "reason",
+        "blocks_acceptance"
+      ],
+      "properties": {
+        "unknown_id": {
+          "type": "string",
+          "pattern": "^unknown:[A-Za-z0-9._:-]{1,80}$"
+        },
+        "domain": {
+          "type": "string"
+        },
+        "source_ids": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^src:"
+          },
+          "uniqueItems": true
+        },
+        "reason": {
+          "type": "string",
+          "minLength": 1
+        },
+        "blocks_acceptance": {
+          "type": "boolean"
+        }
+      }
+    },
+    "policy": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "policy_id",
+        "rule",
+        "scope_coverage",
+        "known_omissions",
+        "decisive_negative_precedence",
+        "blocking_conflict_precedence",
+        "unknown_blocks_acceptance"
+      ],
+      "properties": {
+        "policy_id": {
+          "const": "cap.all_required_domains_satisfied_no_blocking_conflict.v1"
+        },
+        "rule": {
+          "const": "all_required_domains_satisfied_no_blocking_conflict"
+        },
+        "scope_coverage": {
+          "enum": [
+            "full",
+            "partial"
+          ]
+        },
+        "known_omissions": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "uniqueItems": true
+        },
+        "decisive_negative_precedence": {
+          "const": true
+        },
+        "blocking_conflict_precedence": {
+          "const": true
+        },
+        "unknown_blocks_acceptance": {
+          "const": true
+        }
+      }
+    },
+    "result": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "status",
+        "derived_by",
+        "rationale"
+      ],
+      "properties": {
+        "status": {
+          "enum": [
+            "BOUNDED_ACCEPTABLE",
+            "BOUNDED_UNACCEPTABLE",
+            "INSUFFICIENT_EVIDENCE",
+            "BLOCKED_BY_CONFLICT",
+            "PARTIAL_ASSESSMENT",
+            "TOOL_FAILURE"
+          ]
+        },
+        "derived_by": {
+          "const": "cap.all_required_domains_satisfied_no_blocking_conflict.v1"
+        },
+        "rationale": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "toolFailure": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "stage",
+        "message"
+      ],
+      "properties": {
+        "stage": {
+          "type": "string",
+          "minLength": 1
+        },
+        "message": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    }
+  }
+}

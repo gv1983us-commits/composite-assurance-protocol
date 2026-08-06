@@ -1,0 +1,229 @@
+{
+  "record_profile_version": "0.1-draft",
+  "record_id": "cap:invalid:result",
+  "created_at": "2026-08-06T19:45:00+03:00",
+  "producer": {
+    "name": "CAP reference producer",
+    "role": "example"
+  },
+  "subject": {
+    "subject_id": "runtime:example",
+    "description": "Example agent runtime performing a resumed bounded publication task"
+  },
+  "assessment_question": "Is this runtime acceptable for the declared resumed bounded publication task?",
+  "assessment_scope": {
+    "task": "resume and publish one fixed artifact revision",
+    "environment": "declared GitHub publication environment",
+    "time_window": "single bounded execution window",
+    "limitations": [
+      "no general safety claim",
+      "no permanent certification",
+      "no identity inference"
+    ]
+  },
+  "source_records": [
+    {
+      "source_id": "src:bec",
+      "artifact_id": "claude.bec",
+      "repository": "gv1983us-commits/behavioral-execution-contract",
+      "reviewed_revision": "62f2b7940b5ca7a4a8b24150b9c45a6ab5d97261",
+      "record_uri": "https://github.com/gv1983us-commits/behavioral-execution-contract/blob/62f2b7940b5ca7a4a8b24150b9c45a6ab5d97261/ARTIFACT.json#example-native-record",
+      "claim_domain": "task_execution_evidence",
+      "native_status": "VALID",
+      "native_status_owner": "claude.bec",
+      "native_status_meaning_uri": "https://github.com/gv1983us-commits/behavioral-execution-contract/blob/62f2b7940b5ca7a4a8b24150b9c45a6ab5d97261/CANON.md",
+      "validation_receipt": {
+        "status": "VALIDATED",
+        "validator": "claude.bec native validator",
+        "evidence_ref": "receipt:src:bec:validated"
+      },
+      "carried_only": true,
+      "native_record_validity_established_by_cap": false
+    },
+    {
+      "source_id": "src:mpaa",
+      "artifact_id": "claude.mpaa",
+      "repository": "gv1983us-commits/mpaa",
+      "reviewed_revision": "0d1aaf35cc4826622f3312fdd2a1c2d40890b965",
+      "record_uri": "https://github.com/gv1983us-commits/mpaa/blob/0d1aaf35cc4826622f3312fdd2a1c2d40890b965/ARTIFACT.json#example-native-record",
+      "claim_domain": "portable_agent_runtime_description",
+      "native_status": "CONFORMANT",
+      "native_status_owner": "claude.mpaa",
+      "native_status_meaning_uri": "https://github.com/gv1983us-commits/mpaa/blob/0d1aaf35cc4826622f3312fdd2a1c2d40890b965/CANON.md",
+      "validation_receipt": {
+        "status": "VALIDATED",
+        "validator": "claude.mpaa native validator",
+        "evidence_ref": "receipt:src:mpaa:validated"
+      },
+      "carried_only": true,
+      "native_record_validity_established_by_cap": false
+    },
+    {
+      "source_id": "src:pca",
+      "artifact_id": "claude.pca",
+      "repository": "gv1983us-commits/pca",
+      "reviewed_revision": "a669f023198615ad929f42df84f19380b57ca5ea",
+      "record_uri": "https://github.com/gv1983us-commits/pca/blob/a669f023198615ad929f42df84f19380b57ca5ea/ARTIFACT.json#example-native-record",
+      "claim_domain": "process_continuation_assessment",
+      "native_status": "CONTINUATION_SUPPORTED",
+      "native_status_owner": "claude.pca",
+      "native_status_meaning_uri": "https://github.com/gv1983us-commits/pca/blob/a669f023198615ad929f42df84f19380b57ca5ea/CANON.md",
+      "validation_receipt": {
+        "status": "VALIDATED",
+        "validator": "claude.pca native validator",
+        "evidence_ref": "receipt:src:pca:validated"
+      },
+      "carried_only": true,
+      "native_record_validity_established_by_cap": false
+    },
+    {
+      "source_id": "src:review",
+      "artifact_id": "claude.review_protocol",
+      "repository": "gv1983us-commits/repository-canon-review-protocol",
+      "reviewed_revision": "b4205ffd91a6316ab40243cbf8161a1c512cae1f",
+      "record_uri": "https://github.com/gv1983us-commits/repository-canon-review-protocol/blob/b4205ffd91a6316ab40243cbf8161a1c512cae1f/ARTIFACT.json#example-native-record",
+      "claim_domain": "source_review_reproducibility",
+      "native_status": "VALID",
+      "native_status_owner": "claude.review_protocol",
+      "native_status_meaning_uri": "https://github.com/gv1983us-commits/repository-canon-review-protocol/blob/b4205ffd91a6316ab40243cbf8161a1c512cae1f/CANON.md",
+      "validation_receipt": {
+        "status": "VALIDATED",
+        "validator": "claude.review_protocol native validator",
+        "evidence_ref": "receipt:src:review:validated"
+      },
+      "carried_only": true,
+      "native_record_validity_established_by_cap": false
+    },
+    {
+      "source_id": "src:arb",
+      "artifact_id": "claude.arb",
+      "repository": "gv1983us-commits/agent-runtime-boundaries",
+      "reviewed_revision": "bcf9f628ee1d7c2075673b00f660674680bb6f62",
+      "record_uri": "https://github.com/gv1983us-commits/agent-runtime-boundaries/blob/bcf9f628ee1d7c2075673b00f660674680bb6f62/ARTIFACT.json#example-native-record",
+      "claim_domain": "runtime_boundary_analysis",
+      "native_status": "ANALYTICAL_CONTEXT_PRESENT",
+      "native_status_owner": "claude.arb",
+      "native_status_meaning_uri": "https://github.com/gv1983us-commits/agent-runtime-boundaries/blob/bcf9f628ee1d7c2075673b00f660674680bb6f62/CANON.md",
+      "validation_receipt": {
+        "status": "VALIDATED",
+        "validator": "claude.arb native validator",
+        "evidence_ref": "receipt:src:arb:validated"
+      },
+      "carried_only": true,
+      "native_record_validity_established_by_cap": false
+    },
+    {
+      "source_id": "src:cdts",
+      "artifact_id": "claude.cdts",
+      "repository": "gv1983us-commits/cdts",
+      "reviewed_revision": "ffb9719ae06db0f4f0cdd20b937c2648181a4e4a",
+      "record_uri": "https://github.com/gv1983us-commits/cdts/blob/ffb9719ae06db0f4f0cdd20b937c2648181a4e4a/ARTIFACT.json#example-native-record",
+      "claim_domain": "cross_domain_trace_admissibility",
+      "native_status": "ADMISSIBLE",
+      "native_status_owner": "claude.cdts",
+      "native_status_meaning_uri": "https://github.com/gv1983us-commits/cdts/blob/ffb9719ae06db0f4f0cdd20b937c2648181a4e4a/CANON.md",
+      "validation_receipt": {
+        "status": "VALIDATED",
+        "validator": "claude.cdts native validator",
+        "evidence_ref": "receipt:src:cdts:validated"
+      },
+      "carried_only": true,
+      "native_record_validity_established_by_cap": false
+    }
+  ],
+  "required_domains": [
+    "task_execution_evidence",
+    "portable_agent_runtime_description",
+    "process_continuation_assessment",
+    "source_review_reproducibility",
+    "runtime_boundary_analysis",
+    "cross_domain_trace_admissibility"
+  ],
+  "domain_results": [
+    {
+      "domain": "task_execution_evidence",
+      "disposition": "SATISFIED",
+      "basis_source_ids": [
+        "src:bec"
+      ],
+      "mapping_rule": "Carry VALID only as evidence for task_execution_evidence within the declared task scope.",
+      "rationale": "Validated native evidence is available for task_execution_evidence.",
+      "native_verdicts_preserved": true
+    },
+    {
+      "domain": "portable_agent_runtime_description",
+      "disposition": "SATISFIED",
+      "basis_source_ids": [
+        "src:mpaa"
+      ],
+      "mapping_rule": "Carry CONFORMANT only as evidence for portable_agent_runtime_description within the declared task scope.",
+      "rationale": "Validated native evidence is available for portable_agent_runtime_description.",
+      "native_verdicts_preserved": true
+    },
+    {
+      "domain": "process_continuation_assessment",
+      "disposition": "SATISFIED",
+      "basis_source_ids": [
+        "src:pca"
+      ],
+      "mapping_rule": "Carry CONTINUATION_SUPPORTED only as evidence for process_continuation_assessment within the declared task scope.",
+      "rationale": "Validated native evidence is available for process_continuation_assessment.",
+      "native_verdicts_preserved": true
+    },
+    {
+      "domain": "source_review_reproducibility",
+      "disposition": "SATISFIED",
+      "basis_source_ids": [
+        "src:review"
+      ],
+      "mapping_rule": "Carry VALID only as evidence for source_review_reproducibility within the declared task scope.",
+      "rationale": "Validated native evidence is available for source_review_reproducibility.",
+      "native_verdicts_preserved": true
+    },
+    {
+      "domain": "runtime_boundary_analysis",
+      "disposition": "SATISFIED",
+      "basis_source_ids": [
+        "src:arb"
+      ],
+      "mapping_rule": "Carry ANALYTICAL_CONTEXT_PRESENT only as evidence for runtime_boundary_analysis within the declared task scope.",
+      "rationale": "Validated native evidence is available for runtime_boundary_analysis.",
+      "native_verdicts_preserved": true
+    },
+    {
+      "domain": "cross_domain_trace_admissibility",
+      "disposition": "SATISFIED",
+      "basis_source_ids": [
+        "src:cdts"
+      ],
+      "mapping_rule": "Carry ADMISSIBLE only as evidence for cross_domain_trace_admissibility within the declared task scope.",
+      "rationale": "Validated native evidence is available for cross_domain_trace_admissibility.",
+      "native_verdicts_preserved": true
+    }
+  ],
+  "conflicts": [],
+  "unknowns": [],
+  "composition_policy": {
+    "policy_id": "cap.all_required_domains_satisfied_no_blocking_conflict.v1",
+    "rule": "all_required_domains_satisfied_no_blocking_conflict",
+    "scope_coverage": "full",
+    "known_omissions": [],
+    "decisive_negative_precedence": true,
+    "blocking_conflict_precedence": true,
+    "unknown_blocks_acceptance": true
+  },
+  "result": {
+    "status": "BOUNDED_UNACCEPTABLE",
+    "derived_by": "cap.all_required_domains_satisfied_no_blocking_conflict.v1",
+    "rationale": "All required domains are satisfied under full declared coverage with no higher-precedence blocker."
+  },
+  "claims_not_made": [
+    "world_truth_not_established",
+    "global_acceptability_not_established",
+    "permanent_runtime_certification_not_claimed",
+    "neighbor_conformance_not_imported",
+    "native_verdicts_not_redecided",
+    "identity_or_subjectivity_not_established",
+    "security_or_safety_certification_not_claimed"
+  ]
+}
