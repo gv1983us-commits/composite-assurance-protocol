@@ -12,13 +12,13 @@ CAP does not replace BEC, MPAA, PCA, Repository Canon and Review Protocol, ARB, 
 
 ```text
 artifact_id: claude.cap
-artifact_version: 0.1-draft
+artifact_version: 0.2
 record_profile_version: 0.1-draft
-status: canonical_public_draft
+status: canonical_public_release
 claim_domain: bounded_cross_artifact_assessment
 ```
 
-The machine-readable passport is [`ARTIFACT.json`](ARTIFACT.json). Citation and authority order are fixed in [`CANON.md`](CANON.md).
+The machine-readable passport is [`ARTIFACT.json`](ARTIFACT.json). Citation and authority order are fixed in [`CANON.md`](CANON.md). Release stability is fixed in [`PROFILE_LOCK.json`](PROFILE_LOCK.json), and lifecycle policy is under [`lifecycle/`](lifecycle/).
 
 ## Six normative surfaces
 
@@ -31,7 +31,14 @@ The machine-readable passport is [`ARTIFACT.json`](ARTIFACT.json). Citation and 
 | [`spec/05_CONFORMANCE.md`](spec/05_CONFORMANCE.md) | validation pipeline, result statuses and exit codes |
 | [`schema/composite-assessment-record.schema.json`](schema/composite-assessment-record.schema.json) | record profile `0.1-draft` structural representation |
 
-[`validator/cap_validate.py`](validator/cap_validate.py) is a non-normative fail-closed reference implementation.
+The normative surface remains exactly six files. Machine-readable profiles and implementations are executable contracts but do not acquire independent normative authority.
+
+## Implementations
+
+- [`validator/cap_validate.py`](validator/cap_validate.py) is the non-normative fail-closed Python reference implementation.
+- [`independent/node/cap_validate.mjs`](independent/node/cap_validate.mjs) is an independent Node.js implementation that does not import Python code.
+
+Both implementations are checked against the same schema, machine specification, diagnostic registry, expectations manifest, and resistance corpus.
 
 ## Result statuses
 
@@ -57,17 +64,6 @@ tool failure
   > all required domains satisfied + full coverage
 ```
 
-This yields, respectively:
-
-```text
-TOOL_FAILURE
-BLOCKED_BY_CONFLICT
-BOUNDED_UNACCEPTABLE
-INSUFFICIENT_EVIDENCE
-PARTIAL_ASSESSMENT
-BOUNDED_ACCEPTABLE
-```
-
 ## Source discipline
 
 CAP pins the reviewed revisions of all six neighboring artifacts in [`references/PINNED_ARTIFACT_REVISIONS.md`](references/PINNED_ARTIFACT_REVISIONS.md). A source record remains owned by its native artifact.
@@ -80,21 +76,37 @@ bounded assessment != world truth
 assessment for one task != permanent runtime certification
 ```
 
-## Conformance hardening
+## Conformance and diagnostics
 
 [`conformance/expectations.json`](conformance/expectations.json) is the machine-readable oracle for the complete fixture corpus. The conformance tests require one-to-one coverage between fixtures and expectations, exercise all six result statuses, validate the schema against the Draft 2020-12 metaschema, and prove that structural rejection is distinct from CAP semantic rejection.
 
-A new fixture without an expectation, or an expectation without a fixture, fails CI.
+Stable diagnostic identifiers are defined in [`DIAGNOSTICS.md`](DIAGNOSTICS.md) and [`specification/diagnostics.json`](specification/diagnostics.json). Automation reads codes; humans read messages.
+
+## Machine-readable specification
+
+The [`specification/`](specification/) directory separates protocol rules from implementation language:
+
+- vocabulary;
+- ordered derivation rules;
+- semantic invariants;
+- diagnostic registry.
+
+CI prevents the Python implementation, Node implementation, machine specification, and conformance corpus from drifting apart.
+
+## Lifecycle
+
+CAP 0.2 includes explicit versioning, compatibility, migration, roadmap, and stability policies. The release keeps the record profile at `0.1-draft`; protocol version and record-profile version are intentionally independent.
 
 ## Reproducible checks
 
 ```bash
 python -m unittest discover -v
-python -m unittest conformance.test_conformance -v
-python -m json.tool ARTIFACT.json >/dev/null
-python validator/cap_validate.py examples/bounded-runtime-assessment.json
 python -m review.test_artifact_canon
+python -m review.test_release_0_2
+node independent/node/test_conformance.mjs
 ```
+
+The permanent CI matrix covers Python 3.10–3.13 and Node.js 20/22.
 
 ## License
 
