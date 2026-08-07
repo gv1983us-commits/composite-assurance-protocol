@@ -1,5 +1,22 @@
-# CAP Conformance Corpus
+# CAP conformance corpus
 
-Expected-valid fixtures begin with `valid-`. Expected-invalid fixtures begin with `invalid-` or `malformed-`.
+This directory is the implementation-neutral resistance and acceptance corpus for CAP.
 
-The corpus tests all six result statuses and resistance to pin mismatch, incomplete domain coverage, unvalidated support, result forgery, partial-coverage laundering, native-owner reassignment, conflict laundering, missing claim boundaries, duplicate keys, non-finite numbers, and undeclared global-pass fields.
+- `fixtures/` contains valid, invalid and malformed assessment records.
+- `expectations.json` is the machine-readable oracle for every fixture.
+- `test_conformance.py` proves total corpus coverage, validates the JSON Schema metaschema, checks all six CAP outcomes, and separates structural from semantic rejection.
+- `RESISTANCE_CORPUS.md` summarizes the adversarial cases.
+
+A fixture MUST NOT exist without an entry in `expectations.json`, and an expectation MUST NOT name a missing fixture.
+
+Run the complete conformance layer with:
+
+```bash
+python -m unittest conformance.test_conformance -v
+```
+
+Run all repository checks with:
+
+```bash
+python -m unittest discover -v
+```
