@@ -30,3 +30,19 @@ jobs:
           python -m json.tool schema/composite-assessment-record.schema.json >/dev/null
           python validator/cap_validate.py examples/bounded-runtime-assessment.json
           python -m review.test_artifact_canon
+
+  independent-node:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        node-version: ["20", "22"]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node-version }}
+      - name: Run independent Node conformance
+        run: |
+          node independent/node/test_conformance.mjs
+          node independent/node/cap_validate.mjs examples/bounded-runtime-assessment.json
