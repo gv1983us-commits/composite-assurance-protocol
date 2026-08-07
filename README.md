@@ -38,7 +38,7 @@ The normative surface remains exactly six files. Machine-readable profiles and i
 - [`validator/cap_validate.py`](validator/cap_validate.py) is the non-normative fail-closed Python reference implementation.
 - [`independent/node/cap_validate.mjs`](independent/node/cap_validate.mjs) is an independent Node.js implementation that does not import Python code.
 
-Both implementations are checked against the same schema, machine specification, diagnostic registry, expectations manifest, and resistance corpus.
+Both implementations are checked against the same schema, machine specification, diagnostic registry, expectations manifest, and resistance corpus. A separate differential stress suite mutates valid records adversarially and requires both implementations to agree on exit class, validation status, CAP result, and stable diagnostic codes.
 
 ## Result statuses
 
@@ -80,6 +80,8 @@ assessment for one task != permanent runtime certification
 
 [`conformance/expectations.json`](conformance/expectations.json) is the machine-readable oracle for the complete fixture corpus. The conformance tests require one-to-one coverage between fixtures and expectations, exercise all six result statuses, validate the schema against the Draft 2020-12 metaschema, and prove that structural rejection is distinct from CAP semantic rejection.
 
+[`conformance/test_differential.py`](conformance/test_differential.py) adds a second class of evidence: deterministic adversarial mutations are evaluated by both the Python reference implementation and the independent Node.js implementation, and CI fails on any divergence in machine-visible outcome.
+
 Stable diagnostic identifiers are defined in [`DIAGNOSTICS.md`](DIAGNOSTICS.md) and [`specification/diagnostics.json`](specification/diagnostics.json). Automation reads codes; humans read messages.
 
 ## Machine-readable specification
@@ -104,9 +106,14 @@ python -m unittest discover -v
 python -m review.test_artifact_canon
 python -m review.test_release_0_2
 node independent/node/test_conformance.mjs
+python -m unittest conformance.test_differential -v
 ```
 
-The permanent CI matrix covers Python 3.10–3.13 and Node.js 20/22.
+The permanent CI matrix covers Python 3.10–3.13 and Node.js 20/22. A dedicated differential job provisions Python 3.13 and Node.js 22 together and enforces cross-runtime agreement on adversarial mutations.
+
+## Release provenance
+
+The accepted CAP 0.2 release baseline is recorded in [`RELEASE_ACCEPTANCE.json`](RELEASE_ACCEPTANCE.json). `PROVENANCE.md` and `review/PUBLICATION_MANIFEST.md` distinguish that historical accepted revision from later hardening or corpus-level canonization work; a later acceptance must name its own exact revision.
 
 ## License
 
