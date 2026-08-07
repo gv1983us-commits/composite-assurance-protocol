@@ -80,10 +80,17 @@ bounded assessment != world truth
 assessment for one task != permanent runtime certification
 ```
 
+## Conformance hardening
+
+[`conformance/expectations.json`](conformance/expectations.json) is the machine-readable oracle for the complete fixture corpus. The conformance tests require one-to-one coverage between fixtures and expectations, exercise all six result statuses, validate the schema against the Draft 2020-12 metaschema, and prove that structural rejection is distinct from CAP semantic rejection.
+
+A new fixture without an expectation, or an expectation without a fixture, fails CI.
+
 ## Reproducible checks
 
 ```bash
 python -m unittest discover -v
+python -m unittest conformance.test_conformance -v
 python -m json.tool ARTIFACT.json >/dev/null
 python validator/cap_validate.py examples/bounded-runtime-assessment.json
 python -m review.test_artifact_canon
