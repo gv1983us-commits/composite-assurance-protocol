@@ -1,0 +1,21 @@
+{
+  "profile": "cap-machine-vocabulary/0.1",
+  "record_profile": "0.1-draft",
+  "dispositions": {
+    "SATISFIED": {"terminal": true, "requires": ["validated_source_basis"]},
+    "UNSATISFIED": {"terminal": true, "requires": ["validated_source_basis"]},
+    "UNKNOWN": {"terminal": false, "requires": ["matching_unknown_record"]},
+    "CONFLICTING": {"terminal": false, "requires": ["matching_conflict_record"]}
+  },
+  "results": [
+    "TOOL_FAILURE",
+    "BLOCKED_BY_CONFLICT",
+    "BOUNDED_UNACCEPTABLE",
+    "INSUFFICIENT_EVIDENCE",
+    "PARTIAL_ASSESSMENT",
+    "BOUNDED_ACCEPTABLE"
+  ],
+  "scope_coverage": ["full", "partial"],
+  "conflict_resolution_status": ["UNRESOLVED", "RESOLVED"],
+  "source_validation_status": ["VALIDATED", "NOT_VALIDATED", "UNAVAILABLE"]
+}
