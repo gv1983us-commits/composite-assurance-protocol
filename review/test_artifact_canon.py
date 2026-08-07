@@ -7,6 +7,7 @@ EXPECTED = {
  'spec/01_CAP_CORE.md','spec/02_ASSESSMENT_VOCABULARY.md','spec/03_COMPOSITION_POLICY.md',
  'spec/04_CONFLICT_AND_UNKNOWN_HANDLING.md','spec/05_CONFORMANCE.md',
  'schema/composite-assessment-record.schema.json','validator/cap_validate.py',
+ 'conformance/__init__.py','conformance/expectations.json','conformance/test_conformance.py',
  'references/PINNED_ARTIFACT_REVISIONS.md','.github/workflows/ci.yml'
 }
 
@@ -39,6 +40,11 @@ class ArtifactCanonTests(unittest.TestCase):
         self.assertEqual('https://json-schema.org/draft/2020-12/schema', self.schema['$schema'])
         self.assertIn('gv1983us-commits/composite-assurance-protocol', self.schema['$id'])
         self.assertFalse(self.schema['additionalProperties'])
+
+    def test_conformance_oracle_is_declared(self):
+        expectations=json.loads((ROOT/'conformance/expectations.json').read_text())
+        self.assertEqual('cap-conformance-expectations/0.2', expectations['profile'])
+        self.assertTrue(expectations['fixtures'])
 
     def test_no_placeholders_or_sensitive_markers(self):
         bad=('TO'+'DO','TB'+'D','REPLACE'+'_ME','BEGIN PRIVATE'+' KEY')
