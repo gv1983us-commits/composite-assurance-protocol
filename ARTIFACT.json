@@ -34,6 +34,7 @@
     "independent_implementation": "independent/node/",
     "lifecycle": "lifecycle/",
     "profile_lock": "PROFILE_LOCK.json",
+    "release_acceptance": "RELEASE_ACCEPTANCE.json",
     "verification": "review/"
   },
   "reference_implementation": {
@@ -52,6 +53,7 @@
   "canonical_checks": [
     "python -m unittest discover -v",
     "python -m json.tool ARTIFACT.json >/dev/null",
+    "python -m json.tool RELEASE_ACCEPTANCE.json >/dev/null",
     "python validator/cap_validate.py examples/bounded-runtime-assessment.json",
     "node independent/node/test_conformance.mjs",
     "python -m review.test_artifact_canon",
