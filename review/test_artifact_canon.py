@@ -3,10 +3,11 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 EXPECTED = {
- 'README.md','CANON.md','ARTIFACT.json','RELATIONS.md','PROVENANCE.md','LICENSE','AGENTS.md',
+ 'README.md','CANON.md','ARTIFACT.json','RELATIONS.md','PROVENANCE.md','LICENSE','AGENTS.md','DIAGNOSTICS.md',
  'spec/01_CAP_CORE.md','spec/02_ASSESSMENT_VOCABULARY.md','spec/03_COMPOSITION_POLICY.md',
  'spec/04_CONFLICT_AND_UNKNOWN_HANDLING.md','spec/05_CONFORMANCE.md',
  'schema/composite-assessment-record.schema.json','validator/cap_validate.py',
+ 'validator/cap_validate_diagnostic.py','validator/diagnostics.py',
  'conformance/__init__.py','conformance/expectations.json','conformance/test_conformance.py',
  'references/PINNED_ARTIFACT_REVISIONS.md','.github/workflows/ci.yml'
 }
@@ -43,8 +44,10 @@ class ArtifactCanonTests(unittest.TestCase):
 
     def test_conformance_oracle_is_declared(self):
         expectations=json.loads((ROOT/'conformance/expectations.json').read_text())
-        self.assertEqual('cap-conformance-expectations/0.2', expectations['profile'])
+        self.assertEqual('cap-conformance-expectations/0.3', expectations['profile'])
         self.assertTrue(expectations['fixtures'])
+        for expected in expectations['fixtures'].values():
+            self.assertIn('diagnostic_codes', expected)
 
     def test_no_placeholders_or_sensitive_markers(self):
         bad=('TO'+'DO','TB'+'D','REPLACE'+'_ME','BEGIN PRIVATE'+' KEY')
