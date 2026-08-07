@@ -9,7 +9,7 @@ EXPECTED = {
  'schema/composite-assessment-record.schema.json','validator/cap_validate.py',
  'validator/cap_validate_diagnostic.py','validator/diagnostics.py',
  'conformance/__init__.py','conformance/expectations.json','conformance/test_conformance.py',
- 'conformance/test_machine_specification.py','specification/README.md',
+ 'conformance/test_machine_specification.py','conformance/test_differential.py','specification/README.md',
  'specification/vocabulary.json','specification/derivation.json',
  'specification/invariants.json','specification/diagnostics.json',
  'independent/node/README.md','independent/node/cap_validate.mjs','independent/node/test_conformance.mjs',
@@ -68,6 +68,15 @@ class ArtifactCanonTests(unittest.TestCase):
         for name, profile in expected.items():
             payload=json.loads((ROOT/'specification'/name).read_text())
             self.assertEqual(profile, payload['profile'])
+
+    def test_cross_runtime_differential_is_mandatory(self):
+        workflow=(ROOT/'.github/workflows/ci.yml').read_text(encoding='utf-8')
+        self.assertIn('differential:', workflow)
+        self.assertIn('python -m unittest conformance.test_differential -v', workflow)
+        self.assertIn('actions/setup-python@v5', workflow)
+        self.assertIn('actions/setup-node@v4', workflow)
+        checks=set(self.artifact['canonical_checks'])
+        self.assertIn('python -m unittest conformance.test_differential -v', checks)
 
     def test_no_placeholders_or_sensitive_markers(self):
         bad=('TO'+'DO','TB'+'D','REPLACE'+'_ME','BEGIN PRIVATE'+' KEY')
