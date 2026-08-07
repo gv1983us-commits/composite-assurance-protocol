@@ -1,0 +1,22 @@
+{
+  "profile": "cap-conformance-expectations/0.2",
+  "fixtures": {
+    "invalid-extra-global-pass.json": {"exit_code": 1, "validation_status": "INVALID", "cap_result": null},
+    "invalid-missing-boundary.json": {"exit_code": 1, "validation_status": "INVALID", "cap_result": null},
+    "invalid-missing-domain-result.json": {"exit_code": 1, "validation_status": "INVALID", "cap_result": null},
+    "invalid-native-owner-mismatch.json": {"exit_code": 1, "validation_status": "INVALID", "cap_result": null},
+    "invalid-partial-without-omissions.json": {"exit_code": 1, "validation_status": "INVALID", "cap_result": null},
+    "invalid-pin-mismatch.json": {"exit_code": 1, "validation_status": "INVALID", "cap_result": null},
+    "invalid-resolved-conflict-blocking.json": {"exit_code": 1, "validation_status": "INVALID", "cap_result": null},
+    "invalid-result-mismatch.json": {"exit_code": 1, "validation_status": "INVALID", "cap_result": null},
+    "invalid-satisfied-unvalidated-source.json": {"exit_code": 1, "validation_status": "INVALID", "cap_result": null},
+    "malformed-duplicate-key.json": {"exit_code": 1, "validation_status": "INVALID", "cap_result": null},
+    "malformed-nan.json": {"exit_code": 1, "validation_status": "INVALID", "cap_result": null},
+    "valid-blocked-by-conflict.json": {"exit_code": 0, "validation_status": "VALID", "cap_result": "BLOCKED_BY_CONFLICT"},
+    "valid-bounded-acceptable.json": {"exit_code": 0, "validation_status": "VALID", "cap_result": "BOUNDED_ACCEPTABLE"},
+    "valid-bounded-unacceptable.json": {"exit_code": 0, "validation_status": "VALID", "cap_result": "BOUNDED_UNACCEPTABLE"},
+    "valid-insufficient-evidence.json": {"exit_code": 0, "validation_status": "VALID", "cap_result": "INSUFFICIENT_EVIDENCE"},
+    "valid-partial-assessment.json": {"exit_code": 0, "validation_status": "VALID", "cap_result": "PARTIAL_ASSESSMENT"},
+    "valid-tool-failure.json": {"exit_code": 0, "validation_status": "VALID", "cap_result": "TOOL_FAILURE"}
+  }
+}
