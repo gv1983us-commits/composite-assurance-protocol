@@ -1,0 +1,15 @@
+{
+  "profile": "cap-derivation-rules/0.1",
+  "policy_id": "cap.all_required_domains_satisfied_no_blocking_conflict.v1",
+  "evaluation": "first_matching_rule",
+  "rules": [
+    {"rule_id": "CAP-DERIVE-001", "when": {"fact": "tool_failure_present", "equals": true}, "result": "TOOL_FAILURE"},
+    {"rule_id": "CAP-DERIVE-002", "when": {"fact": "unresolved_blocking_conflict_present", "equals": true}, "result": "BLOCKED_BY_CONFLICT"},
+    {"rule_id": "CAP-DERIVE-003", "when": {"fact": "unsatisfied_domain_present", "equals": true}, "result": "BOUNDED_UNACCEPTABLE"},
+    {"rule_id": "CAP-DERIVE-004", "when": {"any": [{"fact": "unknown_domain_present", "equals": true}, {"fact": "blocking_unknown_present", "equals": true}]}, "result": "INSUFFICIENT_EVIDENCE"},
+    {"rule_id": "CAP-DERIVE-005", "when": {"fact": "conflicting_domain_present", "equals": true}, "result": "BLOCKED_BY_CONFLICT"},
+    {"rule_id": "CAP-DERIVE-006", "when": {"all": [{"fact": "all_domains_satisfied", "equals": true}, {"fact": "scope_coverage", "equals": "partial"}]}, "result": "PARTIAL_ASSESSMENT"},
+    {"rule_id": "CAP-DERIVE-007", "when": {"all": [{"fact": "all_domains_satisfied", "equals": true}, {"fact": "scope_coverage", "equals": "full"}]}, "result": "BOUNDED_ACCEPTABLE"}
+  ],
+  "no_match": null
+}
