@@ -15,7 +15,8 @@ EXPECTED = {
  'independent/node/README.md','independent/node/cap_validate.mjs','independent/node/test_conformance.mjs',
  'lifecycle/LIFECYCLE.json','lifecycle/VERSIONING.md','lifecycle/CHANGELOG.md',
  'lifecycle/COMPATIBILITY.md','lifecycle/MIGRATION.md','lifecycle/ROADMAP.md','lifecycle/STABILITY_PROMISE.md',
- 'review/test_release_0_2.py','references/PINNED_ARTIFACT_REVISIONS.md','.github/workflows/ci.yml'
+ 'review/test_release_0_2.py','review/2026-08-07_DIAMOND_7_HARDENING.md',
+ 'references/PINNED_ARTIFACT_REVISIONS.md','.github/workflows/ci.yml'
 }
 
 class ArtifactCanonTests(unittest.TestCase):
