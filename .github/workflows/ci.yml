@@ -1,5 +1,6 @@
 name: Composite Assurance Protocol CI
 
+# Permanent CAP verification contour.
 on:
   workflow_dispatch:
   push:
