@@ -9,6 +9,9 @@ EXPECTED = {
  'schema/composite-assessment-record.schema.json','validator/cap_validate.py',
  'validator/cap_validate_diagnostic.py','validator/diagnostics.py',
  'conformance/__init__.py','conformance/expectations.json','conformance/test_conformance.py',
+ 'conformance/test_machine_specification.py','specification/README.md',
+ 'specification/vocabulary.json','specification/derivation.json',
+ 'specification/invariants.json','specification/diagnostics.json',
  'references/PINNED_ARTIFACT_REVISIONS.md','.github/workflows/ci.yml'
 }
 
@@ -48,6 +51,17 @@ class ArtifactCanonTests(unittest.TestCase):
         self.assertTrue(expectations['fixtures'])
         for expected in expectations['fixtures'].values():
             self.assertIn('diagnostic_codes', expected)
+
+    def test_machine_specification_profiles_are_declared(self):
+        expected={
+            'vocabulary.json':'cap-machine-vocabulary/0.1',
+            'derivation.json':'cap-derivation-rules/0.1',
+            'invariants.json':'cap-semantic-invariants/0.1',
+            'diagnostics.json':'cap-diagnostic-registry/0.1',
+        }
+        for name, profile in expected.items():
+            payload=json.loads((ROOT/'specification'/name).read_text())
+            self.assertEqual(profile, payload['profile'])
 
     def test_no_placeholders_or_sensitive_markers(self):
         bad=('TO'+'DO','TB'+'D','REPLACE'+'_ME','BEGIN PRIVATE'+' KEY')
