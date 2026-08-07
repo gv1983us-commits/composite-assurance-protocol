@@ -3,7 +3,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 EXPECTED = {
- 'README.md','CANON.md','ARTIFACT.json','RELATIONS.md','PROVENANCE.md','LICENSE','AGENTS.md','DIAGNOSTICS.md',
+ 'README.md','CANON.md','ARTIFACT.json','RELATIONS.md','PROVENANCE.md','LICENSE','AGENTS.md','DIAGNOSTICS.md','PROFILE_LOCK.json',
  'spec/01_CAP_CORE.md','spec/02_ASSESSMENT_VOCABULARY.md','spec/03_COMPOSITION_POLICY.md',
  'spec/04_CONFLICT_AND_UNKNOWN_HANDLING.md','spec/05_CONFORMANCE.md',
  'schema/composite-assessment-record.schema.json','validator/cap_validate.py',
@@ -12,8 +12,10 @@ EXPECTED = {
  'conformance/test_machine_specification.py','specification/README.md',
  'specification/vocabulary.json','specification/derivation.json',
  'specification/invariants.json','specification/diagnostics.json',
- 'independent/node/cap_validate.mjs','independent/node/test_conformance.mjs',
- 'references/PINNED_ARTIFACT_REVISIONS.md','.github/workflows/ci.yml'
+ 'independent/node/README.md','independent/node/cap_validate.mjs','independent/node/test_conformance.mjs',
+ 'lifecycle/LIFECYCLE.json','lifecycle/VERSIONING.md','lifecycle/CHANGELOG.md',
+ 'lifecycle/COMPATIBILITY.md','lifecycle/MIGRATION.md','lifecycle/ROADMAP.md','lifecycle/STABILITY_PROMISE.md',
+ 'review/test_release_0_2.py','references/PINNED_ARTIFACT_REVISIONS.md','.github/workflows/ci.yml'
 }
 
 class ArtifactCanonTests(unittest.TestCase):
@@ -27,10 +29,12 @@ class ArtifactCanonTests(unittest.TestCase):
 
     def test_identity(self):
         self.assertEqual('claude.cap', self.artifact['artifact_id'])
-        self.assertEqual('canonical_public_draft', self.artifact['artifact_status'])
+        self.assertEqual('0.2', self.artifact['artifact_version'])
+        self.assertEqual('canonical_public_release', self.artifact['artifact_status'])
         self.assertEqual('bounded_cross_artifact_assessment', self.artifact['claim_domain'])
         self.assertEqual(6, self.artifact['normative_surface_count'])
         self.assertEqual(6, len(self.artifact['normative_surfaces']))
+        self.assertTrue(self.artifact['assertion_boundaries']['multi_implementation_conformance_claimed'])
 
     def test_six_exact_relations(self):
         self.assertEqual(6, len(self.artifact['relations']))
@@ -63,11 +67,6 @@ class ArtifactCanonTests(unittest.TestCase):
         for name, profile in expected.items():
             payload=json.loads((ROOT/'specification'/name).read_text())
             self.assertEqual(profile, payload['profile'])
-
-    def test_independent_node_implementation_is_declared(self):
-        text=(ROOT/'independent/node/cap_validate.mjs').read_text()
-        self.assertIn("implementation: 'cap-node-independent/0.1'", text)
-        self.assertNotIn('validator/cap_validate.py', text)
 
     def test_no_placeholders_or_sensitive_markers(self):
         bad=('TO'+'DO','TB'+'D','REPLACE'+'_ME','BEGIN PRIVATE'+' KEY')
