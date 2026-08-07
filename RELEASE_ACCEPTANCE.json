@@ -1,0 +1,34 @@
+{
+  "profile": "cap-release-acceptance/0.2",
+  "protocol": "CAP",
+  "protocol_version": "0.2",
+  "record_profile_version": "0.1-draft",
+  "decision": "ACCEPTED",
+  "accepted_revision": "db571cd73d35ba325525ac665265a954d464327f",
+  "accepted_ci": {
+    "workflow": "Composite Assurance Protocol CI",
+    "run_id": 31146169003,
+    "conclusion": "success",
+    "completed_at": "2026-08-07T04:02:42Z",
+    "jobs": {
+      "python": ["3.10", "3.11", "3.12", "3.13"],
+      "node": ["20", "22"]
+    }
+  },
+  "conformance": {
+    "fixture_count": 17,
+    "result_status_count": 6,
+    "semantic_invariant_count": 29,
+    "diagnostic_code_count": 33,
+    "implementation_count": 2
+  },
+  "implementations": [
+    {"id": "python-reference", "path": "validator/cap_validate.py", "role": "reference"},
+    {"id": "node-independent", "path": "independent/node/cap_validate.mjs", "role": "independent"}
+  ],
+  "boundaries": {
+    "external_certification_claimed": false,
+    "semantics_frozen_as_1_0": false,
+    "global_assurance_claimed": false
+  }
+}
