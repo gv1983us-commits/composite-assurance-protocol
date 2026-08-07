@@ -3,7 +3,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 EXPECTED = {
- 'README.md','CANON.md','ARTIFACT.json','RELATIONS.md','PROVENANCE.md','LICENSE','AGENTS.md','DIAGNOSTICS.md','PROFILE_LOCK.json',
+ 'README.md','CANON.md','ARTIFACT.json','RELATIONS.md','PROVENANCE.md','LICENSE','AGENTS.md','DIAGNOSTICS.md','PROFILE_LOCK.json','RELEASE_ACCEPTANCE.json',
  'spec/01_CAP_CORE.md','spec/02_ASSESSMENT_VOCABULARY.md','spec/03_COMPOSITION_POLICY.md',
  'spec/04_CONFLICT_AND_UNKNOWN_HANDLING.md','spec/05_CONFORMANCE.md',
  'schema/composite-assessment-record.schema.json','validator/cap_validate.py',
@@ -35,6 +35,7 @@ class ArtifactCanonTests(unittest.TestCase):
         self.assertEqual(6, self.artifact['normative_surface_count'])
         self.assertEqual(6, len(self.artifact['normative_surfaces']))
         self.assertTrue(self.artifact['assertion_boundaries']['multi_implementation_conformance_claimed'])
+        self.assertEqual('RELEASE_ACCEPTANCE.json', self.artifact['canonical_surfaces']['release_acceptance'])
 
     def test_six_exact_relations(self):
         self.assertEqual(6, len(self.artifact['relations']))
