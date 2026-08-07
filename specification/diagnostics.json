@@ -1,0 +1,22 @@
+{
+  "profile": "cap-diagnostic-registry/0.1",
+  "namespaces": {
+    "CAP-JSON": "strict JSON parsing",
+    "CAP-SCHEMA": "record-profile structure",
+    "CAP-SEM": "CAP semantic invariants",
+    "CAP-TOOL": "validator execution failure"
+  },
+  "codes": [
+    "CAP-JSON-001", "CAP-JSON-002", "CAP-SCHEMA-001",
+    "CAP-SEM-001", "CAP-SEM-002", "CAP-SEM-003", "CAP-SEM-004", "CAP-SEM-005",
+    "CAP-SEM-006", "CAP-SEM-007", "CAP-SEM-008", "CAP-SEM-009", "CAP-SEM-010",
+    "CAP-SEM-011", "CAP-SEM-012", "CAP-SEM-013", "CAP-SEM-014", "CAP-SEM-015",
+    "CAP-SEM-016", "CAP-SEM-017", "CAP-SEM-018", "CAP-SEM-019", "CAP-SEM-020",
+    "CAP-SEM-021", "CAP-SEM-022", "CAP-SEM-023", "CAP-SEM-024", "CAP-SEM-025",
+    "CAP-SEM-026", "CAP-SEM-027", "CAP-SEM-028", "CAP-SEM-029", "CAP-TOOL-999"
+  ],
+  "stability": {
+    "code_meaning": "stable_within_profile",
+    "human_message": "non_normative_and_changeable"
+  }
+}
