@@ -1,0 +1,15 @@
+{
+  "profile": "cap-lifecycle/0.2",
+  "protocol": "CAP",
+  "current_version": "0.2",
+  "record_profile_version": "0.1-draft",
+  "status": "released",
+  "documents": {
+    "versioning": "lifecycle/VERSIONING.md",
+    "changelog": "lifecycle/CHANGELOG.md",
+    "compatibility": "lifecycle/COMPATIBILITY.md",
+    "migration": "lifecycle/MIGRATION.md",
+    "roadmap": "lifecycle/ROADMAP.md",
+    "stability_promise": "lifecycle/STABILITY_PROMISE.md"
+  }
+}
