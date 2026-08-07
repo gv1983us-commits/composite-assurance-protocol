@@ -9,6 +9,8 @@ from pathlib import Path
 from jsonschema import Draft202012Validator, FormatChecker
 
 from validator import cap_validate
+from validator import cap_validate_diagnostic
+from validator.diagnostics import CODE_RE, classify
 
 ROOT = Path(__file__).resolve().parents[1]
 FIXTURES = ROOT / "conformance" / "fixtures"
@@ -32,15 +34,21 @@ class ConformanceCorpusTests(unittest.TestCase):
 
     def test_every_fixture_matches_its_machine_readable_expectation(self):
         observed_results = set()
+        observed_diagnostics = set()
         for name, expected in sorted(self.expectations.items()):
             with self.subTest(fixture=name):
                 output = io.StringIO()
                 with contextlib.redirect_stdout(output):
-                    exit_code = cap_validate.main([str(FIXTURES / name)])
+                    exit_code = cap_validate_diagnostic.main([str(FIXTURES / name)])
                 payload = json.loads(output.getvalue())
                 self.assertEqual(expected["exit_code"], exit_code)
                 self.assertEqual(expected["validation_status"], payload["validation_status"])
                 self.assertEqual(expected["cap_result"], payload["cap_result"])
+                self.assertEqual(expected["diagnostic_codes"], payload["diagnostic_codes"])
+                for error in payload["errors"]:
+                    self.assertRegex(error, CODE_RE)
+                    self.assertEqual(error.split(" ", 1)[0], classify(error))
+                observed_diagnostics.update(payload["diagnostic_codes"])
                 if payload["cap_result"] is not None:
                     observed_results.add(payload["cap_result"])
         self.assertEqual(
@@ -54,6 +62,7 @@ class ConformanceCorpusTests(unittest.TestCase):
             },
             observed_results,
         )
+        self.assertTrue({"CAP-JSON-001", "CAP-SCHEMA-001", "CAP-SEM-003"} <= observed_diagnostics)
 
     def test_structural_and_semantic_validation_are_distinct(self):
         valid = cap_validate.load_json(FIXTURES / "valid-bounded-acceptable.json")
