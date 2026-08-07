@@ -21,12 +21,19 @@ Profile: `cap-changelog/0.2`
 ### Conformance
 - Makes the complete fixture corpus and expectations manifest executable contracts.
 - Adds cross-implementation and cross-reference checks.
+- Adds deterministic adversarial cross-runtime differential verification for Python and Node.js without changing normative CAP semantics.
 
 ### CI
 - Verifies Python 3.10–3.13 and Node.js 20/22.
+- Adds a dedicated Python 3.13 + Node.js 22 differential job that fails on machine-visible implementation divergence.
 
 ### Lifecycle
 - Adds versioning, compatibility, migration, roadmap, stability promise, profile lock, and release acceptance records.
+
+### Canonization hardening
+- Reconciles `PROVENANCE.md` and `review/PUBLICATION_MANIFEST.md` with the accepted CAP 0.2 release state.
+- Adds regression checks preventing stale pre-release status or pending-acceptance language from reappearing on canonical support surfaces.
+- Records the findings and dispositions in `review/2026-08-07_DIAMOND_7_HARDENING.md`.
 
 ## 0.1-draft
 - Initial public canonical draft with six normative surfaces, JSON Schema, Python validator, resistance corpus, and pinned neighboring artifacts.
