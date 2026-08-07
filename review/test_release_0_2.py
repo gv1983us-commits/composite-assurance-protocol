@@ -11,6 +11,7 @@ class CapRelease02Tests(unittest.TestCase):
     def setUpClass(cls):
         cls.artifact = json.loads((ROOT / "ARTIFACT.json").read_text(encoding="utf-8"))
         cls.lock = json.loads((ROOT / "PROFILE_LOCK.json").read_text(encoding="utf-8"))
+        cls.acceptance = json.loads((ROOT / "RELEASE_ACCEPTANCE.json").read_text(encoding="utf-8"))
         cls.lifecycle = json.loads((ROOT / "lifecycle/LIFECYCLE.json").read_text(encoding="utf-8"))
         cls.derivation = json.loads((ROOT / "specification/derivation.json").read_text(encoding="utf-8"))
         cls.invariants = json.loads((ROOT / "specification/invariants.json").read_text(encoding="utf-8"))
@@ -94,6 +95,33 @@ class CapRelease02Tests(unittest.TestCase):
         for version in self.lock["required_runtimes"]["node"]:
             self.assertIn(f'"{version}"', workflow)
         self.assertTrue(self.artifact["assertion_boundaries"]["multi_implementation_conformance_claimed"])
+
+    def test_release_acceptance_receipt_is_exact_and_bounded(self):
+        receipt = self.acceptance
+        self.assertEqual("cap-release-acceptance/0.2", receipt["profile"])
+        self.assertEqual("CAP", receipt["protocol"])
+        self.assertEqual("0.2", receipt["protocol_version"])
+        self.assertEqual("0.1-draft", receipt["record_profile_version"])
+        self.assertEqual("ACCEPTED", receipt["decision"])
+        self.assertRegex(receipt["accepted_revision"], r"^[0-9a-f]{40}$")
+        self.assertEqual("db571cd73d35ba325525ac665265a954d464327f", receipt["accepted_revision"])
+        self.assertEqual(31146169003, receipt["accepted_ci"]["run_id"])
+        self.assertEqual("success", receipt["accepted_ci"]["conclusion"])
+        self.assertEqual(["3.10", "3.11", "3.12", "3.13"], receipt["accepted_ci"]["jobs"]["python"])
+        self.assertEqual(["20", "22"], receipt["accepted_ci"]["jobs"]["node"])
+
+        observed = {
+            "fixture_count": len(list((ROOT / "conformance/fixtures").glob("*.json"))),
+            "result_status_count": len(self.artifact["result_statuses"]),
+            "semantic_invariant_count": len(self.invariants["invariants"]),
+            "diagnostic_code_count": len(self.diagnostics["codes"]),
+            "implementation_count": 1 + len(self.artifact["independent_implementations"]),
+        }
+        self.assertEqual(observed, receipt["conformance"])
+        self.assertEqual({"python-reference", "node-independent"}, {item["id"] for item in receipt["implementations"]})
+        self.assertFalse(receipt["boundaries"]["external_certification_claimed"])
+        self.assertFalse(receipt["boundaries"]["semantics_frozen_as_1_0"])
+        self.assertFalse(receipt["boundaries"]["global_assurance_claimed"])
 
 
 if __name__ == "__main__":
