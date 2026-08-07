@@ -19,18 +19,35 @@ These roles are distinct. Implementation does not self-grant acceptance, and Hou
 
 CAP was composed against the exact accepted revisions listed in `references/PINNED_ARTIFACT_REVISIONS.md`. Those revisions are historical review points, not aliases for current branch heads.
 
+## Release state
+
+CAP protocol `0.2` is an accepted `canonical_public_release` with record profile `0.1-draft`.
+
+The accepted release baseline is fixed by `RELEASE_ACCEPTANCE.json`:
+
+```text
+accepted_revision: db571cd73d35ba325525ac665265a954d464327f
+accepted_ci_run: 31146169003
+accepted_ci_conclusion: success
+```
+
+The receipt itself was subsequently committed and verified. Later non-normative hardening or canonization work does not retroactively rewrite that historical release receipt; a later acceptance must identify its own exact revision and CI evidence.
+
 ## What this provenance does not claim
 
-It does not claim that Claude directly authored every CAP line in a continuous session, that any model has episodic memory, that CAP is a final standard, or that its source records are externally true merely because they are pinned.
+It does not claim that Claude directly authored every CAP line in a continuous session, that any model has episodic memory, that CAP is a final 1.0 standard, or that its source records are externally true merely because they are pinned.
 
 ## Canonization receipt fields
 
 ```text
 occurred_at_claimed: 2026-08-06
-recorded_at: 2026-08-06
+recorded_at: 2026-08-07
 source_revision_mode: exact_fixed_revision
-artifact_status: canonical_public_draft
-acceptance_state: pending_exact_publication_revision_until_repository_commit
+artifact_version: 0.2
+record_profile_version: 0.1-draft
+artifact_status: canonical_public_release
+release_acceptance_state: accepted
+release_acceptance_receipt: RELEASE_ACCEPTANCE.json
 ```
 
-The final accepted revision belongs in House Claude only after the public repository commit exists and its checks pass.
+A future corpus-level canonization receipt must identify the exact CAP revision it accepts and must not silently substitute `main`, a later branch head, or the historical 0.2 release baseline for that accepted revision.
