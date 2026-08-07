@@ -27,6 +27,23 @@ class CapRelease02Tests(unittest.TestCase):
         self.assertEqual("0.1-draft", self.artifact["record_profile_version"])
         self.assertEqual("0.1-draft", self.lock["record_profile_version"])
 
+    def test_canonical_support_surfaces_match_release_state(self):
+        required_tokens = {
+            "README.md": ("artifact_version: 0.2", "status: canonical_public_release"),
+            "CANON.md": ("protocol version `0.2`", "status `canonical_public_release`"),
+            "PROVENANCE.md": ("artifact_version: 0.2", "artifact_status: canonical_public_release", "release_acceptance_state: accepted"),
+            "review/PUBLICATION_MANIFEST.md": ("protocol version: `0.2`", "status: `canonical_public_release`", "accepted release baseline: `db571cd73d35ba325525ac665265a954d464327f`"),
+        }
+        for relative, tokens in required_tokens.items():
+            text = (ROOT / relative).read_text(encoding="utf-8")
+            for token in tokens:
+                self.assertIn(token, text, f"{relative} missing synchronized release token {token!r}")
+        provenance = (ROOT / "PROVENANCE.md").read_text(encoding="utf-8")
+        manifest = (ROOT / "review/PUBLICATION_MANIFEST.md").read_text(encoding="utf-8")
+        self.assertNotIn("acceptance_state: pending_exact_publication_revision_until_repository_commit", provenance)
+        self.assertNotIn("version: `0.1-draft`", manifest)
+        self.assertNotIn("status: `canonical_public_draft`", manifest)
+
     def test_lifecycle_contract_is_complete(self):
         expected_profiles = {
             "VERSIONING.md": "cap-versioning/0.2",
@@ -94,6 +111,7 @@ class CapRelease02Tests(unittest.TestCase):
             self.assertIn(f'"{version}"', workflow)
         for version in self.lock["required_runtimes"]["node"]:
             self.assertIn(f'"{version}"', workflow)
+        self.assertIn("differential:", workflow)
         self.assertTrue(self.artifact["assertion_boundaries"]["multi_implementation_conformance_claimed"])
 
     def test_release_acceptance_receipt_is_exact_and_bounded(self):
