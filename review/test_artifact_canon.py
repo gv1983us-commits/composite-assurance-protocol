@@ -12,6 +12,7 @@ EXPECTED = {
  'conformance/test_machine_specification.py','specification/README.md',
  'specification/vocabulary.json','specification/derivation.json',
  'specification/invariants.json','specification/diagnostics.json',
+ 'independent/node/cap_validate.mjs','independent/node/test_conformance.mjs',
  'references/PINNED_ARTIFACT_REVISIONS.md','.github/workflows/ci.yml'
 }
 
@@ -63,10 +64,15 @@ class ArtifactCanonTests(unittest.TestCase):
             payload=json.loads((ROOT/'specification'/name).read_text())
             self.assertEqual(profile, payload['profile'])
 
+    def test_independent_node_implementation_is_declared(self):
+        text=(ROOT/'independent/node/cap_validate.mjs').read_text()
+        self.assertIn("implementation: 'cap-node-independent/0.1'", text)
+        self.assertNotIn('validator/cap_validate.py', text)
+
     def test_no_placeholders_or_sensitive_markers(self):
         bad=('TO'+'DO','TB'+'D','REPLACE'+'_ME','BEGIN PRIVATE'+' KEY')
         for path in ROOT.rglob('*'):
-            if path.is_file() and '.git' not in path.parts and path.suffix in {'.md','.json','.py','.yml'}:
+            if path.is_file() and '.git' not in path.parts and path.suffix in {'.md','.json','.py','.yml','.mjs'}:
                 text=path.read_text(encoding='utf-8')
                 for token in bad:
                     self.assertNotIn(token,text,f'{token} in {path}')
