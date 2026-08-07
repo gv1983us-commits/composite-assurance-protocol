@@ -56,6 +56,7 @@
     "python -m json.tool RELEASE_ACCEPTANCE.json >/dev/null",
     "python validator/cap_validate.py examples/bounded-runtime-assessment.json",
     "node independent/node/test_conformance.mjs",
+    "python -m unittest conformance.test_differential -v",
     "python -m review.test_artifact_canon",
     "python -m review.test_release_0_2"
   ],
