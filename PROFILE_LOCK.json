@@ -1,0 +1,24 @@
+{
+  "profile": "cap-profile-lock/0.2",
+  "protocol": "CAP",
+  "protocol_version": "0.2",
+  "record_profile_version": "0.1-draft",
+  "frozen_semantics": false,
+  "normative_surface_count": 6,
+  "diagnostic_registry": "stable",
+  "machine_specification": "stable",
+  "rule_ids": "stable_never_reused",
+  "invariant_ids": "stable_never_reused",
+  "fixture_ids": "stable",
+  "reference_validator": "replaceable_non_normative",
+  "independent_implementation": "required",
+  "conformance_suite": "required",
+  "required_implementations": [
+    "python-reference",
+    "node-independent"
+  ],
+  "required_runtimes": {
+    "python": ["3.10", "3.11", "3.12", "3.13"],
+    "node": ["20", "22"]
+  }
+}
