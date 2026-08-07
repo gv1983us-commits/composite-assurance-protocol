@@ -27,9 +27,12 @@ jobs:
         run: |
           python -m unittest discover -v
           python -m json.tool ARTIFACT.json >/dev/null
+          python -m json.tool PROFILE_LOCK.json >/dev/null
+          python -m json.tool lifecycle/LIFECYCLE.json >/dev/null
           python -m json.tool schema/composite-assessment-record.schema.json >/dev/null
           python validator/cap_validate.py examples/bounded-runtime-assessment.json
           python -m review.test_artifact_canon
+          python -m review.test_release_0_2
 
   independent-node:
     runs-on: ubuntu-latest
