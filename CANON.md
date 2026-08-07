@@ -2,7 +2,7 @@
 
 ## 1. Canonical object
 
-This repository publishes **Composite Assurance Protocol (CAP)** as artifact `claude.cap`, version `0.1-draft`, record profile `0.1-draft`, and status `canonical_public_draft`.
+This repository publishes **Composite Assurance Protocol (CAP)** as artifact `claude.cap`, protocol version `0.2`, record profile `0.1-draft`, and status `canonical_public_release`.
 
 CAP owns only the domain `bounded_cross_artifact_assessment`.
 
@@ -17,17 +17,20 @@ When surfaces appear to conflict, interpret them in this order, limited by domai
 5. `spec/05_CONFORMANCE.md` for validation procedure, output and exit codes.
 6. `schema/composite-assessment-record.schema.json` for record-profile structure.
 
-No surface may override another surface outside its domain.
+The normative surface is closed at exactly these six entries for CAP 0.2. No other file acquires normative authority merely by being executable, machine-readable, or canonical.
 
-## 3. Non-normative surfaces
+## 3. Executable and canonical support surfaces
 
-The following are informative or executable but not independent normative authorities:
+The following support the canon without independently overriding it:
 
-- `validator/` — fail-closed reference implementation;
-- `examples/` — examples only;
+- `specification/` — machine-readable vocabulary, derivation, invariants, and diagnostic registry;
+- `validator/` — fail-closed Python reference implementation;
+- `independent/node/` — independent Node.js implementation;
 - `conformance/` — expected outcomes and resistance corpus;
+- `PROFILE_LOCK.json` — stability and implementation obligations;
+- `lifecycle/` — versioning, compatibility, migration, roadmap, and stability policy;
 - `references/PINNED_ARTIFACT_REVISIONS.md` — exact compatibility receipt;
-- `review/` — publication and canon verification;
+- `review/` — publication, cross-reference, lifecycle, and canon verification;
 - `README.md`, `RELATIONS.md`, and `PROVENANCE.md` — canonical navigation and disclosure.
 
 ## 4. Citation rule
@@ -36,7 +39,7 @@ A conforming citation states at least:
 
 - repository;
 - exact reviewed revision;
-- artifact version;
+- protocol version;
 - record profile version when a record is cited;
 - normative surface and section;
 - assessment question and scope when a CAP result is cited.
@@ -60,10 +63,12 @@ CAP may derive a new bounded result only through the declared composition policy
 
 ## 6. Exact source set
 
-The active compatibility set is fixed in `references/PINNED_ARTIFACT_REVISIONS.md` and mirrored in `ARTIFACT.json` and the reference validator.
+The active compatibility set is fixed in `references/PINNED_ARTIFACT_REVISIONS.md` and mirrored in `ARTIFACT.json` and both implementations.
 
 These pins identify reviewed historical states. They are not aliases for latest and do not impose reciprocal latest-SHA requirements on neighboring repositories.
 
-## 7. Status boundary
+## 7. Release boundary
 
-`canonical_public_draft` means the public draft has canonical identity, explicit authority, provenance, relations, and reproducible checks. It does not mean final standard, external certification, independent multi-implementation conformance, or permanent correctness.
+`canonical_public_release` means CAP 0.2 has canonical identity, a closed normative surface, explicit lifecycle and compatibility policy, stable diagnostic identifiers, machine-readable rules, a complete conformance corpus, and successful Python and independent Node implementations.
+
+It does not mean external certification, frozen 1.0 semantics, universal safety, permanent correctness, or authority outside the declared bounded assessment scope.
